@@ -11,7 +11,7 @@ const Roles = sequelize.define("roles", {
     },
 }, {
     //3er parametro del del sequelize.define son otras opciones adicionales
-    tableName: 'roles',
+    tableName: 'rol',
     timestamps: false, //esto es opcional si crean las columnas created_at y update_at (si estan creadas no ponemos nada porque eso seria true o le ponemos true si queremos)
 });
 

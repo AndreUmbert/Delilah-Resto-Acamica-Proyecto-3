@@ -21,6 +21,7 @@ Pedidos.belongsTo(Usuarios, {
     foreignKey: "usuarios_id",
 });
 
+// Relacion de muchos a muchos
 Pedidos.belongsToMany(Productos, {
     through: PedidosHasProductos
 });

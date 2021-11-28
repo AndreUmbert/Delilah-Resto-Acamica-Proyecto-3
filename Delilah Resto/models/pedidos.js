@@ -14,9 +14,9 @@ const Pedidos = sequelize.define("pedidos", {
         allowNull: false,
     },
     estado: {
-        type: DataTypes.ENUM(["nuevo", "confirmado", "finalizado"]),
+        type: DataTypes.ENUM(["nuevo", "confirmado", "preparando", "enviando", "cacelado", "entregado",]),
         allowNull: true,
-        defaultValue: 'nuevo',
+        defaultValue: "NUEVO",
     },
 }, {
     //3er parametro del del sequelize.define son otras opciones adicionales
