@@ -20,6 +20,7 @@ const {
 } = require("./models/index");
 const { PedidosService } = require("./services/index");
 const { response } = require("express");
+const pedidosService = require("./services/pedidos.service");
 const APP_PORT = process.env.APP_PORT || 3000;
 const JWT_SECRET = process.env.JWT_SECRET;
 
@@ -176,11 +177,24 @@ app.post("/productos", async (req, res) => {
 //PEDIDOS:
 //----------------------------------------------------
 
+app.post("/pedidos", async (req, res) => {
+
+    const { formas_pago_id, productos, Usuarios_id } = req.body;
+    const nuevoPedido = await pedidosService.crearPedido(formas_pago_id, productos, Usuarios_id);
+
+    res.json({ nuevoPedido });
+});
+
+
+
+
+
 app.get("/pedidos/dashboard", async (req, res) => {
     res.status(200);
 
     const pedidos = await PedidosService.traerPedidos();
-    res.json(pedidos);
+    // res.json(pedidos);
+    console.log(pedidos);
 });
 
 

@@ -10,7 +10,7 @@ Usuarios.belongsTo(Roles, {
 });
 
 Usuarios.hasMany(Pedidos, {
-    foreignKey: "usuarios_id",
+    foreignKey: "Usuarios_id",
 });
 
 Pedidos.belongsTo(FormasPago, {
@@ -18,7 +18,7 @@ Pedidos.belongsTo(FormasPago, {
 });
 
 Pedidos.belongsTo(Usuarios, {
-    foreignKey: "usuarios_id",
+    foreignKey: "Usuarios_id",
 });
 
 // Relacion de muchos a muchos
