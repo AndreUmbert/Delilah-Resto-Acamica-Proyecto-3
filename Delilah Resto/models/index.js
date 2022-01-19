@@ -1,36 +1,36 @@
-const FormasPago = require("./formasPago");
-const Pedidos = require("./pedidos");
-const Productos = require("./productos");
-const PedidosHasProductos = require("./pedidosHasProductos");
-const Roles = require("./roles");
-const Usuarios = require("./usuarios");
+const paymentMethod = require("./paymentMethod");
+const Pedido = require("./pedido");
+const Product = require("./product");
+const PedidoHasProduct = require("./pedidoHasProduct");
+const Rol = require("./rol");
+const Usuario = require("./usuario");
 
-Usuarios.belongsTo(Roles, {
-    foreignKey: "rol_id",
+Usuario.belongsTo(Rol, {
+    foreignKey: "rolId",
 });
 
-Usuarios.hasMany(Pedidos, {
-    foreignKey: "Usuarios_id",
+Usuario.hasMany(Pedido, {
+    foreignKey: "usuarioId",
 });
 
-Pedidos.belongsTo(FormasPago, {
-    foreignKey: "formas_pago_id",
+Pedido.belongsTo(paymentMethod, {
+    foreignKey: "paymentMethodId",
 });
 
-Pedidos.belongsTo(Usuarios, {
-    foreignKey: "Usuarios_id",
+Pedido.belongsTo(Usuario, {
+    foreignKey: "usuarioId",
 });
 
 // Relacion de muchos a muchos
-Pedidos.belongsToMany(Productos, {
-    through: PedidosHasProductos
+Pedido.belongsToMany(Product, {
+    through: PedidoHasProduct
 });
 
 module.exports = {
-    FormasPago,
-    Pedidos,
-    PedidosHasProductos,
-    Productos,
-    Roles,
-    Usuarios,
+    paymentMethod,
+    Pedido,
+    PedidoHasProduct,
+    Product,
+    Rol,
+    Usuario,
 };
