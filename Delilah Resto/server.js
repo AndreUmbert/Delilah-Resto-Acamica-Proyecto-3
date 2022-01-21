@@ -137,24 +137,24 @@ app.get("/productos", async (req, res) => {
     }
 });
 
-//Treaer producto por palabra
-// app.get("/productos/buscar/palabra/:palabraParam", async (req, res) => {
-//     const palabra = req.params.palabra;
-//     try {
-//         const product = await db.query(
-//             //NUNCA PERO NUUUNCA usar variables dentro de las consultas de SQL
-//             "SELECT * FROM product where nombre LIKE :palabraQuery",
-//             {
-//                 type: db.QueryTypes.SELECT,
-//                 replacements: { palabraQuery: `%${palabra}%` }
-//             }
-//         );
-//         res.status(200).json(product);
-//     } catch (error) {
-//         console.error(error.message);
-//         response.status(500).json({ error: "Por favor reintente en unos minutos" });
-//     }
-// });
+// Treaer producto por palabra
+app.get("/productos/buscar/palabra/:palabraParam", async (req, res) => {
+    const palabra = req.params.palabra;
+    try {
+        const product = await db.query(
+            //NUNCA PERO NUUUNCA usar variables dentro de las consultas de SQL
+            "SELECT * FROM product where nombre LIKE :palabraQuery",
+            {
+                type: db.QueryTypes.SELECT,
+                replacements: { palabraQuery: `%${palabra}%` }
+            }
+        );
+        res.status(200).json(product);
+    } catch (error) {
+        console.error(error.message);
+        response.status(500).json({ error: "Por favor reintente en unos minutos" });
+    }
+});
 
 //Treaer producto por ID
 app.get("/productos/buscar/:idPlato", async (req, res) => {
@@ -176,7 +176,7 @@ app.get("/productos/buscar/:idPlato", async (req, res) => {
 });
 
 //POST:
-app.post("/productos", async (req, res) => {
+app.post("/productos", adminVerification, async (req, res) => {
     try {
         const product = await db.query(
             "INSERT INTO product (nombre, precio) values (?,?)",
@@ -193,7 +193,7 @@ app.post("/productos", async (req, res) => {
 });
 
 //PUT/UPDATE:
-app.put("/productos/update/:idProducto", async (req, res) => {
+app.put("/productos/update/:idProducto", adminVerification, async (req, res) => {
     const idProducto = req.params.idProducto;
     const updateProducto = req.body;
     const precio = req.body.precio;
@@ -216,7 +216,7 @@ app.put("/productos/update/:idProducto", async (req, res) => {
 });
 
 //DELETE:
-app.delete("/productos/delete/:idPlato", async (req, res) => {
+app.delete("/productos/delete/:idPlato", adminVerification, async (req, res) => {
     const idPlato = req.params.idPlato;
     const dbPedidoHasProduct = db.models.pedidohasproduct.destroy({
         where: {
