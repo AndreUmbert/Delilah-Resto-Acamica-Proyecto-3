@@ -313,6 +313,36 @@ app.put("/pedidos/update/:idPedido", adminVerification, async (req, res) => {
     res.status(200);
 });
 
+//DELETE:
+app.delete("/pedidos/delete/:idPedido", adminVerification, async (req, res) => {
+    const idPedido = req.params.idPedido;
+    const dbPedidoHasProduct = db.models.pedidohasproduct.destroy({
+        where: {
+            pedidoId: idPedido,
+        }
+    })
+        .then(data => {
+            const dbPedido = db.models.pedido.destroy({
+                where: {
+                    id: idPedido,
+                }
+            });
+            return dbPedido;
+        })
+        .then(record => {
+            console.log(record);
+            if (record >= 1) {
+                res.status(200).json({ message: "Deleted pedido successfully" });
+            }
+            else {
+                res.status(404).json({ message: "record not found" })
+            }
+
+        })
+        .catch(function (error) {
+            res.status(500).json(error);
+        });
+});
 //----------------------------------------------------
 //5.LEVANTAR EL SERVIDOR
 //----------------------------------------------------
